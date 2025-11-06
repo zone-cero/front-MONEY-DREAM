@@ -35,9 +35,11 @@ const getProductById = (id: string) => {
       image: "/nike-air-max-sneakers-white-blue.jpg",
       images: [
         "/nike-air-max-sneakers-white-blue.jpg",
-        "/adidas-ultraboost-running-shoes.jpg",
-        "/premium-white-cotton-t-shirt.jpg",
-        "/black-athletic-pants.jpg",
+        "/nike-air-max-sneakers-white-blue2.png",
+        "/nike-air-max-sneakers-white-blue3.png",
+        "/nike-air-max-sneakers-white-blue4.png",
+        "/nike-air-max-sneakers-white-blue5.png",
+        
       ],
       category: "Tenis",
       stock: 15,
@@ -54,10 +56,13 @@ const getProductById = (id: string) => {
       price: 29.99,
       image: "/premium-white-cotton-t-shirt.jpg",
       images: [
-        "/premium-white-cotton-t-shirt.jpg",
-        "/black-oversized-t-shirt.jpg",
         "/nike-air-max-sneakers-white-blue.jpg",
-        "/black-athletic-pants.jpg",
+        "/nike-air-max-sneakers-white-blue2.png",
+        "/nike-air-max-sneakers-white-blue3.png",
+        "/nike-air-max-sneakers-white-blue4.png",
+        "/nike-air-max-sneakers-white-blue5.png",
+
+       
       ],
       category: "Playeras",
       stock: 8,
@@ -211,7 +216,7 @@ export default function ProductDetailPage() {
                       {[...Array(5)].map((_, i) => (
                         <Star
                           key={i}
-                          className={`h-4 w-4 ${i < Math.floor(product.rating) ? "fill-primary text-primary" : "text-muted"}`}
+                          className={`h-4 w-4 ${i < Math.floor(product.rating) ? "fill-orange-300 text-amber-300" : "text-amber-200"}`}
                         />
                       ))}
                     </div>
