@@ -8,6 +8,8 @@ import { Button } from "@/components/ui/button"
 import { useAppSelector } from "@/lib/hooks"
 import { ArrowRight } from "lucide-react"
 import { useEffect, useState } from "react"
+import Image from "next/image" // Asegúrate de tener esta importación
+
 
 const mockProducts = [
   {
@@ -174,16 +176,33 @@ export default function HomePage() {
         </div>
       </section>
 
+
       {/* Categories Section */}
-      <section className="py-20 px-4  md:pl-20 md:pr-20">
+      <section className="py-20 px-4 lg:px-12"> {/* Padding consistente: px-4 para móvil, lg:px-12 para laptop */}
         <div className="container mx-auto">
+
+          {/* Título de la Sección */}
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-serif font-light mb-2">Explora por categoría</h2>
             <p className="text-muted-foreground text-sm">Encuentra exactamente lo que buscas</p>
           </div>
+
+          {/* Grid de Categorías */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+
+            {/* Tarjeta de Tenis (Banner 1) */}
             <div className="group relative aspect-[4/5] overflow-hidden rounded-lg bg-muted cursor-pointer">
+              {/* Imagen del Banner */}
+              <Image
+                src="/banner1.png"
+                alt="Categoría Tenis"
+                fill
+                sizes="(max-width: 768px) 100vw, 33vw"
+                className="object-cover group-hover:scale-105 transition-transform duration-500"
+              />
+              {/* Overlay de Gradiente */}
               <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent z-10" />
+              {/* Contenido */}
               <div className="absolute bottom-0 left-0 right-0 p-6 z-20">
                 <h3 className="text-2xl font-serif font-light text-white mb-2">Tenis</h3>
                 <p className="text-white/80 text-sm mb-4">Estilo y comodidad</p>
@@ -192,8 +211,20 @@ export default function HomePage() {
                 </Button>
               </div>
             </div>
+
+            {/* Tarjeta de Playeras (Banner 2) */}
             <div className="group relative aspect-[4/5] overflow-hidden rounded-lg bg-muted cursor-pointer">
+              {/* Imagen del Banner */}
+              <Image
+                src="/banner2.png"
+                alt="Categoría Playeras"
+                fill
+                sizes="(max-width: 768px) 100vw, 33vw"
+                className="object-cover group-hover:scale-105 transition-transform duration-500"
+              />
+              {/* Overlay de Gradiente */}
               <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent z-10" />
+              {/* Contenido */}
               <div className="absolute bottom-0 left-0 right-0 p-6 z-20">
                 <h3 className="text-2xl font-serif font-light text-white mb-2">Playeras</h3>
                 <p className="text-white/80 text-sm mb-4">Diseños únicos</p>
@@ -202,8 +233,20 @@ export default function HomePage() {
                 </Button>
               </div>
             </div>
+
+            {/* Tarjeta de Pantalones (Banner 3) */}
             <div className="group relative aspect-[4/5] overflow-hidden rounded-lg bg-muted cursor-pointer">
+              {/* Imagen del Banner */}
+              <Image
+                src="/banner3.png"
+                alt="Categoría Pantalones"
+                fill
+                sizes="(max-width: 768px) 100vw, 33vw"
+                className="object-cover group-hover:scale-105 transition-transform duration-500"
+              />
+              {/* Overlay de Gradiente */}
               <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent z-10" />
+              {/* Contenido */}
               <div className="absolute bottom-0 left-0 right-0 p-6 z-20">
                 <h3 className="text-2xl font-serif font-light text-white mb-2">Pantalones</h3>
                 <p className="text-white/80 text-sm mb-4">Calidad premium</p>
@@ -215,7 +258,6 @@ export default function HomePage() {
           </div>
         </div>
       </section>
-
       {/* CTA Section */}
       {/* <section className="py-20 px-4 bg-gradient-to-br from-primary via-primary to-primary/90">
         <div className="container mx-auto text-center">
