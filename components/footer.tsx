@@ -7,7 +7,7 @@ export function Footer() {
   return (
     // Usa un fondo secundario (claro en modo claro, oscuro en modo oscuro) para distinguirlo del cuerpo principal
     <footer className="bg-muted/40 border-t border-border mt-12">
-      <div className="container mx-auto px-4 py-16 md:py-20">
+      <div className="container mx-auto px-4 py-16  md:pl-20 md:pr-20">
         <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-[2fr_1fr_1fr_2fr] gap-10 md:gap-8 mb-10">
           
           {/* Brand & Social Section */}

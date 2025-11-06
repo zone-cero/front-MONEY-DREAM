@@ -120,7 +120,7 @@ export default function ProductDetailPage() {
     <div className="min-h-screen">
       <Header />
 
-      <main className="pt-52 pb-20 px-4">
+      <main className="pt-52 pb-20 px-4  md:pl-20 md:pr-20">
         <div className="container mx-auto">
           {/* Breadcrumb */}
           <div className="flex items-center gap-2 text-sm text-muted-foreground mb-8">

@@ -72,7 +72,7 @@ export function Header() {
         </div>
       </div>
 
-      <div className="container mx-auto px-4">
+      <div className="container mx-auto px-4  md:pl-20 md:pr-20">
         <div className="flex items-center justify-between h-14">
           {/* Navigation - Left */}
           <nav className="hidden lg:flex items-center gap-8">

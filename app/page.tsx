@@ -149,7 +149,7 @@ export default function HomePage() {
       </section>
 
       {/* Products Section */}
-      <section className="py-20 px-4 bg-muted/30">
+      <section className="py-20 px-4 md:pl-20 md:pr-20 bg-muted/30">
         <div className="container mx-auto">
           <div className="flex items-center justify-between mb-12">
             <div>
@@ -175,7 +175,7 @@ export default function HomePage() {
       </section>
 
       {/* Categories Section */}
-      <section className="py-20 px-4">
+      <section className="py-20 px-4  md:pl-20 md:pr-20">
         <div className="container mx-auto">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-serif font-light mb-2">Explora por categoría</h2>
