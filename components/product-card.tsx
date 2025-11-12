@@ -6,6 +6,7 @@ import { Card, CardContent, CardFooter } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import Image from "next/image"
 import Link from "next/link"
+import { cn } from "@/lib/utils"
 
 interface ProductCardProps {
   id: string
@@ -16,65 +17,82 @@ interface ProductCardProps {
   stock: number
 }
 
+// Define categorías relevantes para mostrar
+const RELEVANT_CATEGORIES = ["Nuevo", "Oferta", "Exclusivo", "Limitado", "Popular"]
+
 export function ProductCard({ id, name, price, image, category, stock }: ProductCardProps) {
+  const showCategory = RELEVANT_CATEGORIES.includes(category)
+  const isOutOfStock = stock === 0
+  const isLowStock = stock < 10 && stock > 0
+
   return (
     <Link href={`/products/${id}`} className="block h-full">
-      {/* Tarjeta general */}
-      <Card className="group flex flex-col h-full border overflow-hidden hover:shadow-xl transition-shadow duration-300 cursor-pointer rounded-lg">
-
-        {/* Imagen */}
-        <div className="relative aspect-square overflow-hidden">
+      <Card className="group flex flex-col h-full border border-gray-200 overflow-hidden hover:shadow-lg transition-shadow duration-300 cursor-pointer rounded-none bg-white">
+        
+        {/* Contenedor de imagen */}
+        <div className="relative aspect-square overflow-hidden bg-gray-100">
           <Image
             src={image || "/placeholder.svg"}
             alt={name}
             fill
-            className="object-cover group-hover:scale-105 transition-transform duration-300"
+            className="object-cover transition-transform duration-300 group-hover:scale-105"
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
           />
 
-          {/* Badges de stock */}
-          {stock < 10 && stock > 0 && (
-            <Badge
-              className="absolute top-[6px] right-[6px] bg-destructive text-destructive-foreground z-10 shadow-sm"
-              style={{
-                borderTopRightRadius: "0.5rem", // coincide con el radio del Card
-              }}
-            >
+          {/* Badges de stock - esquinas cuadradas y posición superior derecha */}
+          {isLowStock && (
+            <Badge className="absolute top-0 right-0 bg-red-500 text-white px-3 py-1 text-xs font-medium rounded-none z-10 shadow-sm">
               Últimas unidades
             </Badge>
           )}
-          {stock === 0 && (
-            <Badge
-              className="absolute top-[6px] right-[6px] bg-muted text-muted-foreground z-10 shadow-sm"
-              style={{
-                borderTopRightRadius: "0.5rem",
-              }}
-            >
+          {isOutOfStock && (
+            <Badge className="absolute top-0 right-0 bg-gray-200 text-gray-700 px-3 py-1 text-xs font-medium rounded-none z-10 shadow-sm">
               Agotado
             </Badge>
           )}
         </div>
 
-        {/* Contenido */}
-        <CardContent className="p-4 flex-grow">
-          <p className="text-xs text-muted-foreground uppercase tracking-wide mb-1">{category}</p>
-          <h3 className="font-semibold text-lg mb-2 line-clamp-1">{name}</h3>
-          <p className="text-2xl font-bold text-primary">${price.toFixed(2)}</p>
+        {/* Contenido principal */}
+        <CardContent className="p-5 flex-grow">
+          {/* Categoría condicional */}
+          {showCategory && (
+            <p className="text-xs text-gray-500 uppercase tracking-wider mb-2 font-medium">
+              {category}
+            </p>
+          )}
+          
+          {/* Nombre del producto */}
+          <h3 className="font-semibold text-lg mb-3 text-gray-900 leading-snug line-clamp-2">
+            {name}
+          </h3>
+          
+          {/* Precio */}
+          <p className="text-2xl font-bold text-black tracking-tight">
+            ${price.toFixed(2)}
+          </p>
         </CardContent>
 
-        {/* Footer */}
-        <CardFooter className="mb-5">
+        {/* Footer con botón */}
+        <CardFooter className="p-5 pt-0 pb-6"> {/* Padding extra abajo para la sombra */}
           <Button
-            className="w-full sm:w-auto sm:px-4" // Cambia el ancho en sm y añade padding para icono
-            disabled={stock === 0}
+            className={cn(
+              "relative w-full h-12 bg-black text-white hover:bg-black font-medium",
+              "transition-all duration-300 ease-in-out rounded-none cursor-pointer",
+              "hover:shadow-[0_3px_0_0_#84ff00] hover:-translate-y-0.5", // Efecto de línea inferior lime
+              isOutOfStock && "opacity-50 cursor-not-allowed hover:shadow-none hover:translate-y-0"
+            )}
+            disabled={isOutOfStock}
             onClick={(e) => {
               e.preventDefault()
               e.stopPropagation()
+              console.log("Añadir al carrito:", id)
             }}
           >
-            <ShoppingCart className="h-4 w-4 mr-0 sm:mr-2" />
-            <span className="sr-only sm:not-sr-only sm:inline">
-              Agregar al carrito
+            <span className="flex items-center justify-center w-full h-full">
+              <ShoppingCart className="h-5 w-5 flex-shrink-0" />
+              <span className="ml-2 text-sm font-medium hidden sm:inline">
+                Agregar al carrito
+              </span>
             </span>
           </Button>
         </CardFooter>

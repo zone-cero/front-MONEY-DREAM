@@ -10,6 +10,11 @@ const _geistMono = Geist_Mono({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
   title: "MONEY DREAM - Tienda de Moda Online",
+  // --- CAMBIO CLAVE AQUÍ ---
+  icons: {
+    icon: '/logoIniciales.png', // Reemplaza esto con la ruta real de tu archivo de icono
+  },
+  // -------------------------
   description: "Plataforma ecommerce profesional para productos de moda",
   generator: "v0.app",
 }

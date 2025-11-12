@@ -6,7 +6,7 @@ import { ProductCard } from "@/components/product-card"
 import { SkeletonProductGrid } from "@/components/skeleton-card"
 import { Button } from "@/components/ui/button"
 import { useAppSelector } from "@/lib/hooks"
-import { ArrowRight } from "lucide-react"
+import { ArrowRight, ChevronRight } from "lucide-react"
 import { useEffect, useState } from "react"
 import Image from "next/image" // Asegúrate de tener esta importación
 
@@ -127,29 +127,60 @@ export default function HomePage() {
       <Header />
 
       {/* Hero Section */}
-      <section className="relative pt-50 pb-32 px-4 overflow-hidden">
-        {/* Background image */}
+      <section className="relative min-h-screen flex items-center justify-start px-4 md:px-16 lg:px-24 bg-white overflow-hidden">
+        {/* Background image - máxima visibilidad, overlay mínimo */}
         <div className="absolute inset-0 z-0">
           <img
             src="/elegant-fashion-store-interior-with-modern-minimal.jpg"
             alt="Hero background"
-            className="w-full h-full object-cover opacity-20"
+            className="w-full h-full object-cover opacity-45 scale-105 hover:scale-100 transition-transform duration-1000 ease-out"
           />
-          <div className="absolute inset-0 bg-gradient-to-b from-background/80 via-background/60 to-background" />
+          <div className="absolute inset-0 bg-gradient-to-br from-white/90 via-white/50 to-transparent" />
         </div>
 
-        <div className="container mx-auto relative z-10">
-          <div className="max-w-3xl mx-auto text-center">
-            <h1 className="text-5xl md:text-6xl lg:text-7xl font-serif font-light mb-6 text-balance tracking-tight">
-              Moda que define tu estilo
-            </h1>
-            <p className="text-lg md:text-xl text-muted-foreground text-pretty leading-relaxed">
-              Descubre nuestra colección exclusiva de tenis, playeras y pantalones. Calidad premium, diseños únicos.
-            </p>
-          </div>
+        {/* Línea vertical lime - elemento decorativo único */}
+        <div className="absolute left-0 top-0 h-full w-1 bg-lime-400 transform -translate-x-full animate-[slideIn_0.8s_ease-out_forwards]" />
+
+        {/* Contenido - alineado a la izquierda, ultra espaciado */}
+        <div className="relative z-10 w-full max-w-4xl ml-0 md:ml-16 lg:ml-24">
+          {/* Título - tamaño gigante, tracking mínimo, sin negrita */}
+          <h1 className="text-6xl md:text-9xl font-light mb-4 text-gray-900 tracking-tighter leading-none">
+            Define tu estilo
+          </h1>
+
+          {/* Eslógan - 3 palabras, uppercase, micro tipografía */}
+          <p className="text-[10px] md:text-xs text-gray-500 mb-16 tracking-[0.6em] uppercase pl-1">
+            Diseño Calidad Estilo
+          </p>
+
+          {/* CTA - ghost button con lime hover, ultra minimalista */}
+          <Button
+            variant="outline"
+            className="rounded-none border border-gray-900 text-gray-900 hover:bg-lime-400 hover:border-lime-400 hover:text-gray-900 transition-all duration-300 px-10 py-4 text-[11px] font-medium tracking-widest flex items-center gap-4 group"
+            onClick={() => document.getElementById('products')?.scrollIntoView({ behavior: 'smooth' })}
+          >
+            <span className="h-px w-8 bg-gray-900 group-hover:w-12 transition-all duration-300" />
+            Explorar
+            <span className="transform transition-transform duration-300 group-hover:translate-x-2">
+              <ChevronRight className="h-4 w-4" />
+            </span>
+          </Button>
+        </div>
+
+        {/* Scroll indicator minimalista - posición fija, micro */}
+        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1.5 opacity-50 hover:opacity-100 transition-opacity">
+          <span className="text-[9px] text-gray-500 tracking-widest uppercase">Scroll</span>
+          <div className="w-px h-12 bg-gray-300" />
         </div>
       </section>
 
+      <style jsx>{`
+  @keyframes slideIn {
+    to {
+      transform: translateX(0);
+    }
+  }
+`}</style>
       {/* Products Section */}
       <section className="py-20 px-4 md:pl-20 md:pr-20 bg-muted/30">
         <div className="container mx-auto">

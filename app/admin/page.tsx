@@ -1,205 +1,203 @@
-"use client"
+// app/admin/page.tsx
 
-import { Header } from "@/components/header"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { useAppSelector } from "@/lib/hooks"
-import { Package, ShoppingBag, Users, DollarSign, Plus, Edit, Trash2 } from "lucide-react"
-import { redirect } from "next/navigation"
-import { useEffect, useState } from "react"
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
-import { Badge } from "@/components/ui/badge"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { 
+  TrendingUp, 
+  DollarSign,
+  ShoppingCart,
+  AlertCircle,
+  Package,
+  Users,
+  ArrowUpRight,
+  Eye
+} from "lucide-react"
 
-export default function AdminDashboard() {
-  const { user, isAuthenticated } = useAppSelector((state) => state.auth)
-  const [mounted, setMounted] = useState(false)
-
-  useEffect(() => {
-    setMounted(true)
-  }, [])
-
-  if (!mounted) return null
-
-  if (!isAuthenticated || user?.role !== "admin") {
-    redirect("/")
-  }
-
-  // Mock data
-  const stats = [
-    { title: "Total Ventas", value: "$12,345", icon: DollarSign, change: "+12.5%" },
-    { title: "Órdenes", value: "156", icon: ShoppingBag, change: "+8.2%" },
-    { title: "Productos", value: "89", icon: Package, change: "+3" },
-    { title: "Clientes", value: "1,234", icon: Users, change: "+23.1%" },
+// OBJETO DE CONFIGURACIÓN ÚNICO
+const dashboardConfig = {
+  brand: {
+    name: "MONEY DREAM",
+    tagline: "Gestión de Inventario Premium"
+  },
+  kpis: [
+    {
+      id: "revenue",
+      title: "Ingresos del Mes",
+      value: "$127,450.00",
+      change: "+18.7%",
+      trend: "positive",
+      icon: DollarSign,
+      accent: "from-neutral-900 to-neutral-700"
+    },
+    {
+      id: "orders",
+      title: "Órdenes esta Semana",
+      value: "2,847",
+      change: "+12.3%",
+      trend: "positive",
+      icon: ShoppingCart,
+      accent: "from-zinc-800 to-zinc-600"
+    },
+    {
+      id: "stock",
+      title: "Alertas de Stock",
+      value: "23 productos",
+      change: "Ver ahora",
+      trend: "warning",
+      icon: AlertCircle,
+      accent: "from-amber-600 to-amber-500"
+    },
+    {
+      id: "customers",
+      title: "Clientes Nuevos",
+      value: "1,392",
+      change: "+8.1%",
+      trend: "positive",
+      icon: Users,
+      accent: "from-slate-700 to-slate-600"
+    }
+  ],
+  products: [
+    { rank: 1, name: "Zapatillas Urban Pro", units: 342, revenue: 8540 },
+    { rank: 2, name: "Jeans Slim Fit", units: 289, revenue: 7225 },
+    { rank: 3, name: "Camiseta Premium", units: 198, revenue: 2970 },
+    { rank: 4, name: "Sneakers Limited", units: 156, revenue: 6240 }
   ]
+}
 
-  const recentOrders = [
-    { id: "ORD-001", customer: "Juan Pérez", total: "$129.99", status: "completed", date: "2024-01-15" },
-    { id: "ORD-002", customer: "María García", total: "$89.99", status: "pending", date: "2024-01-15" },
-    { id: "ORD-003", customer: "Carlos López", total: "$199.99", status: "processing", date: "2024-01-14" },
-    { id: "ORD-004", customer: "Ana Martínez", total: "$59.99", status: "completed", date: "2024-01-14" },
-  ]
-
-  const products = [
-    { id: "1", name: "Nike Air Max 2024", category: "Tenis", price: "$129.99", stock: 15 },
-    { id: "2", name: "Playera Premium Cotton", category: "Playeras", price: "$29.99", stock: 8 },
-    { id: "3", name: "Pantalón Deportivo Pro", category: "Pantalones", price: "$59.99", stock: 20 },
-    { id: "4", name: "Adidas Ultraboost", category: "Tenis", price: "$149.99", stock: 5 },
-  ]
-
+export default function DashboardPage() {
   return (
-    <div className="min-h-screen bg-muted/30">
-      <Header />
-
-      <main className="container mx-auto px-4 pt-50 pb-12">
-        <div className="mb-8">
-          <h1 className="text-4xl font-bold mb-2">Panel de Administración</h1>
-          <p className="text-muted-foreground">Gestiona tu tienda desde un solo lugar</p>
+    <div className="min-h-screen bg-white">
+      {/* HEADER EDITORIAL */}
+      <header className="border-b border-gray-100">
+        <div className="max-w-7xl mx-auto px-6 py-10">
+          <div className="flex items-center justify-between">
+            <div>
+              <h1 className="text-5xl font-light tracking-tight text-neutral-900">
+                {dashboardConfig.brand.name}
+              </h1>
+              <p className="mt-2 text-sm text-gray-500 tracking-wide uppercase">
+                {dashboardConfig.brand.tagline}
+              </p>
+            </div>
+            <div className="hidden md:block">
+              <div className="flex items-center gap-2 text-xs text-gray-400">
+                <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
+                <span className="tracking-wider">SISTEMA ACTIVO</span>
+              </div>
+            </div>
+          </div>
         </div>
+      </header>
 
-        {/* Stats Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-          {stats.map((stat) => (
-            <Card key={stat.title}>
-              <CardHeader className="flex flex-row items-center justify-between pb-2">
-                <CardTitle className="text-sm font-medium text-muted-foreground">{stat.title}</CardTitle>
-                <stat.icon className="h-4 w-4 text-muted-foreground" />
-              </CardHeader>
-              <CardContent>
-                <div className="text-2xl font-bold">{stat.value}</div>
-                <p className="text-xs text-muted-foreground mt-1">
-                  <span className="text-green-600">{stat.change}</span> desde el mes pasado
-                </p>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
+      <main className="max-w-7xl mx-auto px-6 py-12 space-y-16">
+        
+        {/* SECCIÓN DE MÉTRICAS */}
+        <section>
+          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-8">
+            {dashboardConfig.kpis.map((kpi) => {
+              const Icon = kpi.icon
+              return (
+                <Card 
+                  key={kpi.id} 
+                  className="group border-0 shadow-none hover:shadow-xl transition-all duration-500 hover:-translate-y-1"
+                >
+                  <CardHeader className="pb-4">
+                    <div className="flex items-center justify-between">
+                      <CardTitle className="text-xs font-medium text-gray-400 uppercase tracking-wider">
+                        {kpi.title}
+                      </CardTitle>
+                      <div className={`p-2 rounded-lg bg-gradient-to-br ${kpi.accent}`}>
+                        <Icon className="h-4 w-4 text-white" />
+                      </div>
+                    </div>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="flex items-baseline gap-3">
+                      <span className="text-3xl font-light text-neutral-900">
+                        {kpi.value}
+                      </span>
+                      <span className={`text-xs font-medium flex items-center gap-1 ${
+                        kpi.trend === 'positive' ? 'text-green-600' : 
+                        'text-amber-600'
+                      }`}>
+                        {kpi.change}
+                        <ArrowUpRight className="h-3 w-3" />
+                      </span>
+                    </div>
+                  </CardContent>
+                </Card>
+              )
+            })}
+          </div>
+        </section>
 
-        {/* Tabs */}
-        <Tabs defaultValue="orders" className="space-y-6">
-          <TabsList>
-            <TabsTrigger value="orders">Órdenes</TabsTrigger>
-            <TabsTrigger value="products">Productos</TabsTrigger>
-            <TabsTrigger value="customers">Clientes</TabsTrigger>
-          </TabsList>
-
-          <TabsContent value="orders" className="space-y-4">
-            <Card>
-              <CardHeader>
-                <CardTitle>Órdenes Recientes</CardTitle>
-                <CardDescription>Gestiona y monitorea todas las órdenes</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <Table>
-                  <TableHeader>
-                    <TableRow>
-                      <TableHead>ID Orden</TableHead>
-                      <TableHead>Cliente</TableHead>
-                      <TableHead>Total</TableHead>
-                      <TableHead>Estado</TableHead>
-                      <TableHead>Fecha</TableHead>
-                      <TableHead className="text-right">Acciones</TableHead>
-                    </TableRow>
-                  </TableHeader>
-                  <TableBody>
-                    {recentOrders.map((order) => (
-                      <TableRow key={order.id}>
-                        <TableCell className="font-medium">{order.id}</TableCell>
-                        <TableCell>{order.customer}</TableCell>
-                        <TableCell>{order.total}</TableCell>
-                        <TableCell>
-                          <Badge
-                            variant={
-                              order.status === "completed"
-                                ? "default"
-                                : order.status === "processing"
-                                  ? "secondary"
-                                  : "outline"
-                            }
-                          >
-                            {order.status === "completed" && "Completada"}
-                            {order.status === "processing" && "Procesando"}
-                            {order.status === "pending" && "Pendiente"}
-                          </Badge>
-                        </TableCell>
-                        <TableCell>{order.date}</TableCell>
-                        <TableCell className="text-right">
-                          <Button variant="ghost" size="sm">
-                            Ver detalles
-                          </Button>
-                        </TableCell>
-                      </TableRow>
-                    ))}
-                  </TableBody>
-                </Table>
-              </CardContent>
-            </Card>
-          </TabsContent>
-
-          <TabsContent value="products" className="space-y-4">
-            <Card>
-              <CardHeader className="flex flex-row items-center justify-between">
-                <div>
-                  <CardTitle>Productos</CardTitle>
-                  <CardDescription>Gestiona tu inventario de productos</CardDescription>
+        {/* SECCIÓN INFERIOR */}
+        <section className="grid grid-cols-1 lg:grid-cols-3 gap-12">
+          {/* GRÁFICO DE RENDIMIENTO */}
+          <Card className="lg:col-span-2 border border-gray-100 shadow-none">
+            <CardHeader className="border-b border-gray-100 pb-6">
+              <div className="flex items-center justify-between">
+                <CardTitle className="text-lg font-normal text-neutral-900">
+                  Rendimiento de Ventas
+                </CardTitle>
+                <span className="text-xs text-gray-400 uppercase tracking-wider">
+                  Últimos 30 días
+                </span>
+              </div>
+            </CardHeader>
+            <CardContent className="p-8">
+              <div className="h-96 bg-gray-50 rounded-lg flex items-center justify-center">
+                <div className="text-center space-y-4">
+                  <div className="w-16 h-16 mx-auto bg-neutral-900 rounded-full flex items-center justify-center">
+                    <Eye className="h-8 w-8 text-white" />
+                  </div>
+                  <p className="text-sm text-gray-500">
+                    Integra tu gráfico de ventas aquí
+                  </p>
+                  <p className="text-xs text-gray-400">
+                    Recharts • Chart.js • D3.js
+                  </p>
                 </div>
-                <Button>
-                  <Plus className="mr-2 h-4 w-4" />
-                  Agregar Producto
-                </Button>
-              </CardHeader>
-              <CardContent>
-                <Table>
-                  <TableHeader>
-                    <TableRow>
-                      <TableHead>Producto</TableHead>
-                      <TableHead>Categoría</TableHead>
-                      <TableHead>Precio</TableHead>
-                      <TableHead>Stock</TableHead>
-                      <TableHead className="text-right">Acciones</TableHead>
-                    </TableRow>
-                  </TableHeader>
-                  <TableBody>
-                    {products.map((product) => (
-                      <TableRow key={product.id}>
-                        <TableCell className="font-medium">{product.name}</TableCell>
-                        <TableCell>{product.category}</TableCell>
-                        <TableCell>{product.price}</TableCell>
-                        <TableCell>
-                          <Badge variant={product.stock < 10 ? "destructive" : "secondary"}>
-                            {product.stock} unidades
-                          </Badge>
-                        </TableCell>
-                        <TableCell className="text-right">
-                          <div className="flex justify-end gap-2">
-                            <Button variant="ghost" size="sm">
-                              <Edit className="h-4 w-4" />
-                            </Button>
-                            <Button variant="ghost" size="sm">
-                              <Trash2 className="h-4 w-4" />
-                            </Button>
-                          </div>
-                        </TableCell>
-                      </TableRow>
-                    ))}
-                  </TableBody>
-                </Table>
-              </CardContent>
-            </Card>
-          </TabsContent>
+              </div>
+            </CardContent>
+          </Card>
 
-          <TabsContent value="customers" className="space-y-4">
-            <Card>
-              <CardHeader>
-                <CardTitle>Clientes</CardTitle>
-                <CardDescription>Gestiona tu base de clientes</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <p className="text-muted-foreground">Lista de clientes próximamente...</p>
-              </CardContent>
-            </Card>
-          </TabsContent>
-        </Tabs>
+          {/* TOP PRODUCTOS */}
+          <Card className="border border-gray-100 shadow-none">
+            <CardHeader className="border-b border-gray-100 pb-6">
+              <CardTitle className="text-lg font-normal text-neutral-900">
+                Top Productos
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="p-6">
+              <ul className="divide-y divide-gray-100">
+                {dashboardConfig.products.map((product) => (
+                  <li 
+                    key={product.rank} 
+                    className="py-4 flex items-center justify-between group hover:bg-gray-50 px-2 -mx-2 rounded-lg transition-colors"
+                  >
+                    <div className="flex items-center gap-4">
+                      <span className="text-lg font-light text-gray-300">
+                        {product.rank}
+                      </span>
+                      <div>
+                        <p className="text-sm font-medium text-neutral-900">
+                          {product.name}
+                        </p>
+                        <p className="text-xs text-gray-400">
+                          {product.units} unidades
+                        </p>
+                      </div>
+                    </div>
+                    <span className="text-sm font-medium text-neutral-900">
+                      ${product.revenue.toLocaleString()}
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            </CardContent>
+          </Card>
+        </section>
       </main>
     </div>
   )
