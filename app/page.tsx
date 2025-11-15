@@ -110,6 +110,34 @@ const mockProducts = [
   },
 ]
 
+
+// Configuración centralizada de marcas
+const BRANDS = [
+  { name: "Nike", logo: "/logo-nike.svg", width: 80, height: 30 },
+  { name: "Adidas", logo: "/logo-adidas.svg", width: 80, height: 30 },
+  { name: "Puma", logo: "/logo-puma.svg", width: 80, height: 30 },
+  { name: "Zara", logo: "/logo-zara.svg", width: 80, height: 30 },
+  { name: "H&M", logo: "/logo-hm.svg", width: 80, height: 30 },
+  { name: "Levi's", logo: "/logo-levis.svg", width: 80, height: 30 },
+  { name: "Converse", logo: "/logo-converse.svg", width: 80, height: 30 },
+  { name: "Vans", logo: "/logo-vans.svg", width: 80, height: 30 },
+]
+
+// Variante de animación infinita
+const carouselVariants = {
+  animate: {
+    x: [0, -BRANDS.reduce((acc, b) => acc + b.width + 80, 0)],
+    transition: {
+      x: {
+        repeat: Infinity,
+        repeatType: "loop",
+        duration: 30,
+        ease: "linear",
+      },
+    },
+  },
+}
+
 export default function HomePage() {
   const { isLoading } = useAppSelector((state) => state.products)
   const [mounted, setMounted] = useState(false)
@@ -130,10 +158,12 @@ export default function HomePage() {
       <section className="relative min-h-screen flex items-center justify-start px-4 md:px-16 lg:px-24 bg-white overflow-hidden">
         {/* Background image - máxima visibilidad, overlay mínimo */}
         <div className="absolute inset-0 z-0">
-          <img
+          <Image
             src="/elegant-fashion-store-interior-with-modern-minimal.jpg"
             alt="Hero background"
-            className="w-full h-full object-cover opacity-45 scale-105 hover:scale-100 transition-transform duration-1000 ease-out"
+            fill
+            className="object-cover opacity-45 scale-105 hover:scale-100 transition-transform duration-1000 ease-out"
+            priority
           />
           <div className="absolute inset-0 bg-gradient-to-br from-white/90 via-white/50 to-transparent" />
         </div>
@@ -167,12 +197,21 @@ export default function HomePage() {
           </Button>
         </div>
 
+
         {/* Scroll indicator minimalista - posición fija, micro */}
         <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1.5 opacity-50 hover:opacity-100 transition-opacity">
           <span className="text-[9px] text-gray-500 tracking-widest uppercase">Scroll</span>
           <div className="w-px h-12 bg-gray-300" />
         </div>
       </section>
+
+      {/* Animación CSS para carrusel */}
+      <style jsx>{`
+  @keyframes scroll {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+`}</style>
 
       <style jsx>{`
   @keyframes slideIn {
@@ -280,7 +319,7 @@ export default function HomePage() {
               {/* Contenido */}
               <div className="absolute bottom-0 left-0 right-0 p-6 z-20">
                 <h3 className="text-2xl font-serif font-light text-white mb-2">Pantalones</h3>
-                <p className="text-white/80 text-sm mb-4">Calidad premium</p>
+                <p className="text-white/80 text-sm mb-4">Calidad</p>
                 <Button variant="secondary" size="sm" className="text-xs uppercase tracking-wide">
                   Ver más
                 </Button>

@@ -23,17 +23,15 @@ export function Header() {
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-        scrolled
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${scrolled
           ? "bg-gradient-to-b from-white to-transparent backdrop-blur-none"
           : "bg-gradient-to-b from-background/90 via-background/60 to-transparent backdrop-blur-lg"
-      }`}
+        }`}
     >
       {/* Top bar - Se oculta al hacer scroll */}
       <div
-        className={`border-b border-border/30 transition-all duration-500 overflow-hidden ${
-          scrolled ? "max-h-0 opacity-0 border-transparent" : "max-h-10 opacity-100"
-        }`}
+        className={`border-b border-border/30 transition-all duration-500 overflow-hidden ${scrolled ? "max-h-0 opacity-0 border-transparent" : "max-h-10 opacity-100"
+          }`}
       >
         <div className="container mx-auto px-4">
           <div className="flex items-center justify-end h-10 gap-4">
@@ -66,18 +64,16 @@ export function Header() {
 
       {/* Logo section - Con botón de hamburguesa a la derecha en móvil */}
       <div
-        className={`transition-all duration-500 ${
-          scrolled ? "py-3" : "py-6 border-b border-border/30"
-        }`}
+        className={`transition-all duration-500 ${scrolled ? "py-3" : "py-6 border-b border-border/30"
+          }`}
       >
         <div className="container mx-auto px-4">
           <div className="flex items-center justify-between lg:justify-center">
             {/* Logo - centrado en desktop, a la izquierda en móvil */}
             <Link href="/" className="text-center transition-transform duration-500 hover:scale-105 lg:flex lg:justify-center">
               <h1
-                className={`font-normal tracking-[0.2em] transition-all duration-500 ${
-                  scrolled ? "text-2xl md:text-3xl" : "text-3xl md:text-4xl"
-                }`}
+                className={`font-normal tracking-[0.2em] transition-all duration-500 ${scrolled ? "text-2xl md:text-3xl" : "text-3xl md:text-4xl"
+                  }`}
                 style={{ color: '#354C6E' }}
               >
                 MONEY DREAM
@@ -97,7 +93,6 @@ export function Header() {
                     <NavLink href="/sobre-nosotros">Sobre nosotros</NavLink>
                     <NavLink href="/tienda">Tienda</NavLink>
                     <NavLink href="/contacto">Contacto</NavLink>
-                    <NavLink href="/blog">Blog</NavLink>
                     <NavLink href="/catalogo">Catalogo</NavLink>
                     <div className="relative mt-4">
                       <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
@@ -116,9 +111,8 @@ export function Header() {
 
       {/* Navigation - Se oculta al hacer scroll y en móvil */}
       <div
-        className={`hidden lg:block container mx-auto px-4 md:pl-20 md:pr-20 transition-all duration-500 overflow-hidden ${
-          scrolled ? "max-h-0 opacity-0" : "max-h-14 opacity-100 border-b border-border/30"
-        }`}
+        className={`hidden lg:block container mx-auto px-4 md:pl-20 md:pr-20 transition-all duration-500 overflow-hidden ${scrolled ? "max-h-0 opacity-0" : "max-h-14 opacity-100 border-b border-border/30"
+          }`}
       >
         <div className="flex items-center justify-between h-14">
           {/* Navigation - Left */}
@@ -126,7 +120,6 @@ export function Header() {
             <DesktopNavLink href="/sobre-nosotros">Sobre nosotros</DesktopNavLink>
             <DesktopNavLink href="/tienda">Tienda</DesktopNavLink>
             <DesktopNavLink href="/contacto">Contacto</DesktopNavLink>
-            <DesktopNavLink href="/blog">Blog</DesktopNavLink>
           </nav>
 
           {/* Navigation - Right */}
@@ -145,9 +138,8 @@ export function Header() {
 
       {/* Floating icons - Solo se muestran al hacer scroll en desktop */}
       <div
-        className={`hidden lg:flex fixed top-4 right-4 z-50 transition-all duration-500 ${
-          scrolled ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-4 pointer-events-none"
-        }`}
+        className={`hidden lg:flex fixed top-4 right-4 z-50 transition-all duration-500 ${scrolled ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-4 pointer-events-none"
+          }`}
       >
         <div className="flex items-center gap-2 bg-black/20 backdrop-blur-xl rounded-lg p-2 border border-white/10">
           <Link href="/cart">

@@ -29,9 +29,48 @@ export default function CheckoutPage() {
 
   const handleMercadoPagoCheckout = async () => {
     setIsProcessing(true)
-    setTimeout(() => {
+
+    try {
+      // Prepare items for MercadoPago
+      const mpItems = items.map((item) => ({
+        id: item.id,
+        title: item.name,
+        quantity: item.quantity,
+        unit_price: item.price,
+      }))
+
+      // Call API to create preference
+      const response = await fetch("/api/create-preference", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ items: mpItems }),
+      })
+
+      if (!response.ok) {
+        throw new Error("Error al crear la preferencia de pago")
+      }
+
+      const data = await response.json()
+
+      // Check if we have a valid init_point
+      if (data.init_point) {
+        // Redirect to MercadoPago checkout
+        window.location.href = data.init_point
+      } else {
+        // Show message if using mock response
+        alert(
+          data.message ||
+          "Configura tus credenciales de Mercado Pago en las variables de entorno para usar pagos reales"
+        )
+        setIsProcessing(false)
+      }
+    } catch (error) {
+      console.error("Error en checkout:", error)
+      alert("Error al procesar el pago. Por favor intenta nuevamente.")
       setIsProcessing(false)
-    }, 2000)
+    }
   }
 
   if (items.length === 0) {
@@ -64,7 +103,7 @@ export default function CheckoutPage() {
 
       <main className="container mx-auto px-4 pt-32 md:pt-48 pb-12">
         <div className="max-w-6xl mx-auto">
-          
+
           {/* Header */}
           <div className="mb-10">
             <h1 className="text-2xl font-bold tracking-tight text-neutral-900 dark:text-white">
@@ -84,7 +123,7 @@ export default function CheckoutPage() {
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
             {/* Formulario */}
             <div className="lg:col-span-2 space-y-6">
-              
+
               {/* Envío */}
               <Card className="border-neutral-200 dark:border-neutral-800 rounded-none shadow-none">
                 <CardHeader className="pb-4">
@@ -211,21 +250,21 @@ export default function CheckoutPage() {
                           </span>
                         </div>
                       ))}
-                      
+
                       <Separator className="bg-neutral-200 dark:bg-neutral-800" />
-                      
+
                       <div className="flex justify-between text-sm py-2">
                         <span className="text-neutral-600 dark:text-neutral-400">Subtotal</span>
                         <span>${subtotal.toFixed(2)}</span>
                       </div>
-                      
+
                       <div className="flex justify-between text-sm py-2">
                         <span className="text-neutral-600 dark:text-neutral-400">Envío</span>
                         <span>${shipping.toFixed(2)}</span>
                       </div>
-                      
+
                       <Separator className="bg-neutral-200 dark:bg-neutral-800" />
-                      
+
                       <div className="flex justify-between text-base font-semibold py-3">
                         <span className="text-neutral-900 dark:text-white">Total</span>
                         <span className="text-lime-500">${total.toFixed(2)}</span>

@@ -35,7 +35,6 @@ export default function AdminSidebar() {
             )}
             prefetch={false}
           >
-            {item.icon({ className: "h-5 w-5" })}
             {item.label}
           </Link>
         ))}
