@@ -1,4 +1,4 @@
-<Alert className="mb-6 border-primary/50 bg-primary/5">
+       <Alert className="mb-6 border-primary/50 bg-primary/5">
             <AlertCircle className="h-4 w-4 text-primary" />
             <AlertTitle className="text-primary">Integración de Mercado Pago</AlertTitle>
             <AlertDescription>

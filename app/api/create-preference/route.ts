@@ -18,6 +18,7 @@ export async function POST(request: Request) {
     const body = await request.json()
     const accessToken = process.env.MERCADOPAGO_ACCESS_TOKEN
 
+    console.log('accessToken:', accessToken)
     if (!accessToken) {
       console.warn("MERCADOPAGO_ACCESS_TOKEN not configured")
       return NextResponse.json({
@@ -37,12 +38,12 @@ export async function POST(request: Request) {
         currency_id: "USD", // Cambia según tu país: MXN, ARS, BRL, etc.
       })),
       back_urls: {
-        success: `${process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000"}/checkout/success`,
-        failure: `${process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000"}/checkout/failure`,
-        pending: `${process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000"}/checkout/pending`,
+        success: `${process.env.NEXT_PUBLIC_URL}/checkout/success`,
+        failure: `${process.env.NEXT_PUBLIC_URL}/checkout/failure`,
+        pending: `${process.env.NEXT_PUBLIC_URL}/checkout/pending`,
       },
       auto_return: "approved",
-      notification_url: `${process.env.NEXT_PUBLIC_SITE_URL}/api/webhooks/mercadopago`,
+      notification_url: `${process.env.NEXT_PUBLIC_URL}/api/webhooks/mercadopago`,
     }
 
     // Call MercadoPago API
